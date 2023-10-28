@@ -7,6 +7,6 @@
         public string Author { get; set; }
         public string Yearpublication { get; set; }
         public User User { get; set; }
-
+        //public int Calificacion { get; set; }
     }
 }
