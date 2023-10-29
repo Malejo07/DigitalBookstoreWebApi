@@ -17,13 +17,13 @@ builder.Services.AddDbContext<BookAppDbContext>(Options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+//}
 
-app.UseRouting();//2.con esta línea se utilizan rutas???????
+app.UseRouting();//2.con esta lï¿½nea se utilizan rutas???????
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();

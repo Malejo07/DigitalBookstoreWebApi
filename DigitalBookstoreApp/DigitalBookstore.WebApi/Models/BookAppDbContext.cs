@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using DigitalBookstore.WebApi.Models;
 
 namespace DigitalBookstore.WebApi.Models
 {
@@ -8,5 +9,6 @@ namespace DigitalBookstore.WebApi.Models
 
         public DbSet<Book> Books { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Detail> Details { get; set; }
     }
 }
