@@ -1,7 +1,7 @@
 version: '3.4'
 
 services:
-  todo-app-api:
+  digitalbookstore-app-api:
     image: digitalbookstore-app-api
     container_name: digitalbookstore-app-api 
     build:
