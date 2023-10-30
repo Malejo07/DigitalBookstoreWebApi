@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DigitalBookstore.WebApi.Models;
+using DigitalBookstore.WebApi.DTOs;
 
 namespace DigitalBookstore.WebApi.Controllers
 {
@@ -52,14 +53,23 @@ namespace DigitalBookstore.WebApi.Controllers
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        public async Task<IActionResult> PutUser(int id, UserDTO user)
         {
             if (id != user.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(user).State = EntityState.Modified;
+            User putuser = new()
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Lastname = user.Lastname,
+                Email = user.Email,
+                Password = user.Password
+            };
+
+            _context.Entry(putuser).State = EntityState.Modified;
 
             try
             {
@@ -84,13 +94,22 @@ namespace DigitalBookstore.WebApi.Controllers
         // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<User>> PostUser(UserDTO user)
         {
           if (_context.Users == null)
           {
               return Problem("Entity set 'BookAppDbContext.Users'  is null.");
           }
-            _context.Users.Add(user);
+            User postuser = new()
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Lastname = user.Lastname,
+                Email = user.Email,
+                Password = user.Password
+            };
+
+            _context.Users.Add(postuser);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetUser", new { id = user.Id }, user);

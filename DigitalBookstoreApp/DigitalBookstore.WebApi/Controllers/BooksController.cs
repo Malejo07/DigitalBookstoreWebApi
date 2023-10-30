@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DigitalBookstore.WebApi.Models;
+using DigitalBookstore.WebApi.DTOs;
 
 namespace DigitalBookstore.WebApi.Controllers
 {
@@ -52,14 +53,22 @@ namespace DigitalBookstore.WebApi.Controllers
         // PUT: api/Books/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBook(int id, Book book)
+        public async Task<IActionResult> PutBook(int id, BookDTO book)
         {
             if (id != book.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(book).State = EntityState.Modified;
+            Book putbook = new()
+            {
+                Id = book.Id,
+                Title = book.Title,
+                Author = book.Author,
+                Yearpublication = book.Yearpublication
+            };
+
+            _context.Entry(putbook).State = EntityState.Modified;
 
             try
             {
@@ -83,13 +92,21 @@ namespace DigitalBookstore.WebApi.Controllers
         // POST: api/Books
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Book>> PostBook(Book book)
+        public async Task<ActionResult<Book>> PostBook(BookDTO book)
         {
           if (_context.Books == null)
           {
               return Problem("Entity set 'BookAppDbContext.Books'  is null.");
           }
-            _context.Books.Add(book);
+
+            Book postbook = new()
+            {
+                Id = book.Id,
+                Title = book.Title,
+                Author = book.Author,
+                Yearpublication = book.Yearpublication
+            };
+            _context.Books.Add(postbook);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetBook", new { id = book.Id }, book);

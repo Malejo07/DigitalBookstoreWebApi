@@ -1,11 +1,10 @@
-﻿namespace DigitalBookstore.WebApi.Models
+﻿namespace DigitalBookstore.WebApi.DTOs
 {
-    public class Book
+    public class BookDTO
     {
         public int Id { get; set; }
         public string Title { get; set; }
         public string Author { get; set; }
         public string Yearpublication { get; set; }
-        public ICollection<UserBook>? UsersBooks { get; set; }
     }
 }
