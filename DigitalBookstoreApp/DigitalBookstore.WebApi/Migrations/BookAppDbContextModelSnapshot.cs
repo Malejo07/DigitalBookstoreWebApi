@@ -43,7 +43,7 @@ namespace DigitalBookstore.WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Books");
+                    b.ToTable("Book");
                 });
 
             modelBuilder.Entity("DigitalBookstore.WebApi.Models.User", b =>
@@ -72,7 +72,7 @@ namespace DigitalBookstore.WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("DigitalBookstore.WebApi.Models.UserBook", b =>
@@ -102,36 +102,36 @@ namespace DigitalBookstore.WebApi.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserBook");
+                    b.ToTable("UsersBook");
                 });
 
             modelBuilder.Entity("DigitalBookstore.WebApi.Models.UserBook", b =>
                 {
-                    b.HasOne("DigitalBookstore.WebApi.Models.Book", "Books")
-                        .WithMany("UsersBooks")
+                    b.HasOne("DigitalBookstore.WebApi.Models.Book", "Book")
+                        .WithMany("UsersBook")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DigitalBookstore.WebApi.Models.User", "Users")
-                        .WithMany("UsersBooks")
+                    b.HasOne("DigitalBookstore.WebApi.Models.User", "User")
+                        .WithMany("UsersBook")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Books");
+                    b.Navigation("Book");
 
-                    b.Navigation("Users");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("DigitalBookstore.WebApi.Models.Book", b =>
                 {
-                    b.Navigation("UsersBooks");
+                    b.Navigation("UsersBook");
                 });
 
             modelBuilder.Entity("DigitalBookstore.WebApi.Models.User", b =>
                 {
-                    b.Navigation("UsersBooks");
+                    b.Navigation("UsersBook");
                 });
 #pragma warning restore 612, 618
         }

@@ -25,22 +25,22 @@ namespace DigitalBookstore.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserBook>>> GetUsersBooks()
         {
-          if (_context.UsersBooks == null)
+          if (_context.UsersBook == null)
           {
               return NotFound();
           }
-            return await _context.UsersBooks.ToListAsync();
+            return await _context.UsersBook.ToListAsync();
         }
 
         // GET: api/UserBooks/5
         [HttpGet("{id}")]
         public async Task<ActionResult<UserBook>> GetUserBook(int id)
         {
-          if (_context.UsersBooks == null)
+          if (_context.UsersBook == null)
           {
               return NotFound();
           }
-            var userBook = await _context.UsersBooks.FindAsync(id);
+            var userBook = await _context.UsersBook.FindAsync(id);
 
             if (userBook == null)
             {
@@ -96,7 +96,7 @@ namespace DigitalBookstore.WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult<UserBook>> PostUserBook(UserBookDTO userBook)
         {
-          if (_context.UsersBooks == null)
+          if (_context.UsersBook == null)
           {
               return Problem("Entity set 'BookAppDbContext.UsersBooks'  is null.");
           }
@@ -108,27 +108,27 @@ namespace DigitalBookstore.WebApi.Controllers
                 Calification = userBook.Calification,
                 Review = userBook.Review
             };
-            _context.UsersBooks.Add(postuserbook);
+            _context.UsersBook.Add(postuserbook);
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetUserBook", new { id = userBook.Id });
+            return Ok();
+            //return CreatedAtAction("GetUserBook", new { id = postuserbook.Id });
         }
 
         // DELETE: api/UserBooks/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUserBook(int id)
         {
-            if (_context.UsersBooks == null)
+            if (_context.UsersBook == null)
             {
                 return NotFound();
             }
-            var userBook = await _context.UsersBooks.FindAsync(id);
+            var userBook = await _context.UsersBook.FindAsync(id);
             if (userBook == null)
             {
                 return NotFound();
             }
 
-            _context.UsersBooks.Remove(userBook);
+            _context.UsersBook.Remove(userBook);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -136,7 +136,7 @@ namespace DigitalBookstore.WebApi.Controllers
 
         private bool UserBookExists(int id)
         {
-            return (_context.UsersBooks?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.UsersBook?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

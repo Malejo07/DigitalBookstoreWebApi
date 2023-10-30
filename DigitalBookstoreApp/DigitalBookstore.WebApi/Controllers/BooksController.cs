@@ -25,22 +25,22 @@ namespace DigitalBookstore.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Book>>> GetBooks()
         {
-          if (_context.Books == null)
+          if (_context.Book == null)
           {
               return NotFound();
           }
-            return await _context.Books.ToListAsync();
+            return await _context.Book.ToListAsync();
         }
 
         // GET: api/Books/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Book>> GetBook(int id)
         {
-          if (_context.Books == null)
+          if (_context.Book == null)
           {
               return NotFound();
           }
-            var book = await _context.Books.FindAsync(id);
+            var book = await _context.Book.FindAsync(id);
 
             if (book == null)
             {
@@ -50,7 +50,7 @@ namespace DigitalBookstore.WebApi.Controllers
             return book;
         }
 
-        // PUT: api/Books/5
+        // PUT: api/Book/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBook(int id, BookDTO book)
@@ -89,14 +89,14 @@ namespace DigitalBookstore.WebApi.Controllers
             return NoContent();
         }
 
-        // POST: api/Books
+        // POST: api/Book
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Book>> PostBook(BookDTO book)
         {
-          if (_context.Books == null)
+          if (_context.Book == null)
           {
-              return Problem("Entity set 'BookAppDbContext.Books'  is null.");
+              return Problem("Entity set 'BookAppDbContext.Book'  is null.");
           }
 
             Book postbook = new()
@@ -106,7 +106,7 @@ namespace DigitalBookstore.WebApi.Controllers
                 Author = book.Author,
                 Yearpublication = book.Yearpublication
             };
-            _context.Books.Add(postbook);
+            _context.Book.Add(postbook);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetBook", new { id = book.Id }, book);
@@ -136,21 +136,21 @@ namespace DigitalBookstore.WebApi.Controllers
 
 
 
-        // DELETE: api/Books/5
+        // DELETE: api/Book/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBook(int id)
         {
-            if (_context.Books == null)
+            if (_context.Book == null)
             {
                 return NotFound();
             }
-            var book = await _context.Books.FindAsync(id);
+            var book = await _context.Book.FindAsync(id);
             if (book == null)
             {
                 return NotFound();
             }
 
-            _context.Books.Remove(book);
+            _context.Book.Remove(book);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -158,7 +158,7 @@ namespace DigitalBookstore.WebApi.Controllers
 
         private bool BookExists(int id)
         {
-            return (_context.Books?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Book?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

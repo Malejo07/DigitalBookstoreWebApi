@@ -7,8 +7,8 @@ namespace DigitalBookstore.WebApi.Models
     {
         public BookAppDbContext(DbContextOptions<BookAppDbContext> options) : base(options) { }
 
-        public DbSet<Book> Books { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<UserBook> UsersBooks { get; set; }
+        public DbSet<Book> Book { get; set; }
+        public DbSet<User> User { get; set; }
+        public DbSet<UserBook> UsersBook { get; set; }
     }
 }

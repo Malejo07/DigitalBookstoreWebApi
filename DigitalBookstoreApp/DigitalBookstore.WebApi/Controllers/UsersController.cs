@@ -25,22 +25,22 @@ namespace DigitalBookstore.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-          if (_context.Users == null)
+          if (_context.User == null)
           {
               return NotFound();
           }
-            return await _context.Users.ToListAsync();
+            return await _context.User.ToListAsync();
         }
 
-        // GET: api/Users/5
+        // GET: api/User/5
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
-          if (_context.Users == null)
+          if (_context.User == null)
           {
               return NotFound();
           }
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.User.FindAsync(id);
 
             if (user == null)
             {
@@ -50,7 +50,7 @@ namespace DigitalBookstore.WebApi.Controllers
             return user;
         }
 
-        // PUT: api/Users/5
+        // PUT: api/User/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(int id, UserDTO user)
@@ -91,14 +91,14 @@ namespace DigitalBookstore.WebApi.Controllers
         }
 
 
-        // POST: api/Users
+        // POST: api/User
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(UserDTO user)
         {
-          if (_context.Users == null)
+          if (_context.User == null)
           {
-              return Problem("Entity set 'BookAppDbContext.Users'  is null.");
+              return Problem("Entity set 'BookAppDbContext.User'  is null.");
           }
             User postuser = new()
             {
@@ -109,27 +109,27 @@ namespace DigitalBookstore.WebApi.Controllers
                 Password = user.Password
             };
 
-            _context.Users.Add(postuser);
+            _context.User.Add(postuser);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetUser", new { id = user.Id }, user);
         }
 
-        // DELETE: api/Users/5
+        // DELETE: api/User/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
-            if (_context.Users == null)
+            if (_context.User == null)
             {
                 return NotFound();
             }
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.User.FindAsync(id);
             if (user == null)
             {
                 return NotFound();
             }
 
-            _context.Users.Remove(user);
+            _context.User.Remove(user);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -137,7 +137,7 @@ namespace DigitalBookstore.WebApi.Controllers
 
         private bool UserExists(int id)
         {
-            return (_context.Users?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.User?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

@@ -6,6 +6,6 @@
         public string Title { get; set; }
         public string Author { get; set; }
         public string Yearpublication { get; set; }
-        public ICollection<UserBook>? UsersBooks { get; set; }
+        public ICollection<UserBook> UsersBook { get; set; }
     }
 }

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DigitalBookstore.WebApi.Migrations
 {
     [DbContext(typeof(BookAppDbContext))]
-    [Migration("20231029225443_ModificationTableUser")]
-    partial class ModificationTableUser
+    [Migration("20231030170410_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,18 +40,13 @@ namespace DigitalBookstore.WebApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Yearpublication")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Books");
+                    b.ToTable("Book");
                 });
 
             modelBuilder.Entity("DigitalBookstore.WebApi.Models.User", b =>
@@ -80,23 +75,66 @@ namespace DigitalBookstore.WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("User");
                 });
 
-            modelBuilder.Entity("DigitalBookstore.WebApi.Models.Book", b =>
+            modelBuilder.Entity("DigitalBookstore.WebApi.Models.UserBook", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Calification")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Review")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UsersBook");
+                });
+
+            modelBuilder.Entity("DigitalBookstore.WebApi.Models.UserBook", b =>
+                {
+                    b.HasOne("DigitalBookstore.WebApi.Models.Book", "Book")
+                        .WithMany("UsersBook")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DigitalBookstore.WebApi.Models.User", "User")
-                        .WithMany("Books")
+                        .WithMany("UsersBook")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Book");
+
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("DigitalBookstore.WebApi.Models.Book", b =>
+                {
+                    b.Navigation("UsersBook");
                 });
 
             modelBuilder.Entity("DigitalBookstore.WebApi.Models.User", b =>
                 {
-                    b.Navigation("Books");
+                    b.Navigation("UsersBook");
                 });
 #pragma warning restore 612, 618
         }
