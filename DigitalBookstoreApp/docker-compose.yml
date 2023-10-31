@@ -8,7 +8,17 @@ services:
       context: ./DigitalBookstore.WebApi
       dockerfile: Dockerfile
     ports:
-      - "8980:80" 
+      - "7214:14" 
+    networks:
+      - mynetwork
+ digitalbookstoreappsqlserver:
+    image: mcr.microsoft.com/mssql/server:latest 
+    container_name: digitalbookstoreappsqlserver 
+    ports:
+      - "14330:1433"
+    environment:
+      - SA_PASSWORD=Malejo07_
+      - ACCEPT_EULA=Y
     networks:
       - mynetwork
 
